@@ -1,0 +1,710 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Gateway | v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5050/"
+    }
+  ],
+  "paths": {
+    "/api/SenzorPodaci/VratiSenzorPodatak/{id}": {
+      "get": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/SviSenzorPodaci": {
+      "get": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/DodajSenzorPodatak": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SenzorPodatak"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SenzorPodatak"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SenzorPodatak"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/IzmeniSenzorPodatak": {
+      "put": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SenzorPodatak"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SenzorPodatak"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SenzorPodatak"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/IzbrisiSenzorPodatak/{id}": {
+      "delete": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/MinTemperatura": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/MaxTemperatura": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/AvgTemperatura": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/SumTemperatura": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/MinVlaznostVazduha": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/MaxVlaznostVazduha": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/AvgVlaznostVazduha": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/SumVlaznostVazduha": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/MinPm2_5": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/MaxPm2_5": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/AvgPm2_5": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/SumPm2_5": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/MinPm10": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/MaxPm10": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/AvgPm10": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SenzorPodaci/SumPm10": {
+      "post": {
+        "tags": [
+          "SenzorPodaci"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VremenskiPeriod"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SenzorPodatak": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vreme": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "temperatura": {
+            "type": "number",
+            "format": "float"
+          },
+          "vlaznostVazduha": {
+            "type": "number",
+            "format": "float"
+          },
+          "pm25": {
+            "type": "number",
+            "format": "float"
+          },
+          "pm10": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "Timestamp": {
+        "type": "object",
+        "properties": {
+          "seconds": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nanos": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "nullable": true
+      },
+      "VremenskiPeriod": {
+        "type": "object",
+        "properties": {
+          "pocetak": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "kraj": {
+            "$ref": "#/components/schemas/Timestamp"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "SenzorPodaci"
+    }
+  ]
+}

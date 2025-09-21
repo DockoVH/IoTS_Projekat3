@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "./senzorPodaci";
+
+service SenzorPodaci {
+	rpc VratiSenzorPodatak(google.protobuf.Int32Value) returns (SenzorPodatak) {}
+	rpc SviSenzorPodaci(google.protobuf.Empty) returns (stream SenzorPodatak) {}
+	rpc DodajSenzorPodatak(SenzorPodatak) returns (google.protobuf.BoolValue) {}
+	rpc IzmeniSenzorPodatak(SenzorPodatak) returns (google.protobuf.BoolValue) {}
+	rpc IzbrisiSenzorPodatak(google.protobuf.Int32Value) returns (google.protobuf.BoolValue) {}
+	rpc SviSenzorPodaciPeriod(VremenskiPeriod) returns (stream SenzorPodatak) {}
+}
+
+
+message SenzorPodatak {
+	int32 id = 1;
+	google.protobuf.Timestamp vreme = 2;
+	float temperatura = 3;
+	float vlaznostVazduha = 4;
+	float pm2_5 = 5;
+	float pm10 = 6;
+}
+
+message VremenskiPeriod {
+	google.protobuf.Timestamp pocetak = 1;
+	google.protobuf.Timestamp kraj = 2;
+}

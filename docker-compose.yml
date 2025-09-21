@@ -1,0 +1,79 @@
+services:
+  db:
+    container_name: iots3_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_podaci:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - mreza
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d test_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  datamanager:
+    container_name: iots3_data_manager
+    build: ./DataManager
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - mreza
+    ports:
+      - 5050:5050
+
+  gateway:
+    container_name: iots3_gateway
+    build: ./Gateway
+    depends_on:
+      - datamanager
+    networks:
+      - mreza
+    ports:
+      - 8080:8080
+
+  sensorgenerator:
+    container_name: iots3_sensor_generator
+    build: ./SensorGenerator
+    depends_on:
+      - gateway
+    networks:
+      - mreza
+  mqtt:
+    container_name: iots3_mqtt
+    image: eclipse-mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - ./mosquitto:/mosquitto/config
+    networks:
+      - mreza
+  eventmanager:
+    container_name: iots3_event_manager
+    build: ./EventManager
+    depends_on:
+      - mqtt
+    networks:
+      - mreza
+  mqttclient:
+    container_name: iots3_mqtt_client
+    build: ./MqttClient
+    depends_on:
+      - mqtt
+    networks:
+      - mreza
+    ports:
+      - 8085:8085
+
+networks:
+  mreza:
+    driver: bridge
