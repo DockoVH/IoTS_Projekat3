@@ -131,7 +131,7 @@ def sacuvaj(model, scaler):
 def napravi_model():
 	scaler = MinMaxScaler()
 
-	podaci_scaled, labels_class, labels_reg = ucitaj_i_preprocesiraj('Datasetovi/01.csv', scaler)
+	podaci_scaled, labels_class, labels_reg = ucitaj_i_preprocesiraj('Datasetovi/18.csv', scaler)
 
 	if podaci_scaled is None or labels_class is None or labels_reg is None:
 		print('Model nije napravljen')
