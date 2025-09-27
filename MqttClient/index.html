@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="static/style.css" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senzorski podaci</title>
+  <link href="static/style.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="tabela">
-        <div id="temperatura">
-
-        </div>
-        <div id="vlaznost-vazduha">
-
-        </div>
-        <div id="pm2_5">
-
-        </div>
-        <div id="pm10">
-
-        </div>
+    <div class="container">
+        <h1>Senzorski podaci</h1>
+        <table class="tabela" id="tabela">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>⏰ Vreme</th>
+                    <th>🌡️ Temperatura</th>
+                    <th>💧 Vlažnost vazduha</th>
+                    <th>🌫️ PM2.5</th>
+                    <th>🌫️ PM10</th>
+                </tr>
+            </thead>
+            <tbody id="tabela"></tbody>
+        </table>
     </div>
     <script src="static/main.js"></script>
 </body>
 </html>
+
