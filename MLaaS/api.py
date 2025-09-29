@@ -35,12 +35,13 @@ app = FastAPI(title = 'Senzor podaci predikcija API')
 KLASE_KVALITETA_VAZDUHA = ['DOBRO', 'UMERENO', 'LOŠE', 'VEOMA LOŠE']
 
 class SenzorPodaci(BaseModel):
-	podaci: list
+	Podaci: list
 
 @app.post('/predict')
 async def predict(ulaz: SenzorPodaci):
+	print(ulaz)
 	try:
-		podaci = np.array(ulaz.podaci)
+		podaci = np.array(ulaz.Podaci)
 
 		if len(podaci.shape) != 2 or podaci.shape[1] != 4:
 			raise HTTPException(status_code = 400, detail = 'Očekuje se matrica podataka oblika (10, 4)')

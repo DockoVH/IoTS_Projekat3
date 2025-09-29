@@ -1,4 +1,6 @@
 const tabela = document.getElementById('tabela')
+const predTemperatura = document.getElementById('predikcija-temperatura')
+const predKvalitetVazduha = document.getElementById('predikcija-kvalitet-vazduha')
 
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
 const socket = new WebSocket(`${protocol}//${window.location.host}/ws`);
@@ -20,8 +22,19 @@ socket.onmessage = (e) => {
     data.forEach(p => {
         str += String.fromCharCode(parseInt(p))
     })
-
     const obj = JSON.parse(str.slice(1))
+
+    if (str[0] == '4') {
+        predTemperatura.innerText = `${obj.predvidjena_temperatura.toFixed(2)} °C`
+        predKvalitetVazduha.innerText = `${obj.kvalitet_vazduha.klasa}`
+
+        return
+    }
+
+    dodajSenzorPodatak(obj)
+}
+
+const dodajSenzorPodatak = (obj) => {
     const opts = {
         day: '2-digit',
         year: 'numeric',
@@ -30,7 +43,7 @@ socket.onmessage = (e) => {
         minute: 'numeric',
         second: 'numeric',
         hour12: false
-}
+    }
 
     const red = document.createElement('tr')
 

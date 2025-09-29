@@ -8,20 +8,35 @@
 </head>
 <body>
     <div class="container">
-        <h1>Senzorski podaci</h1>
-        <table class="tabela" id="tabela">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>⏰ Vreme</th>
-                    <th>🌡️ Temperatura</th>
-                    <th>💧 Vlažnost vazduha</th>
-                    <th>🌫️ PM2.5</th>
-                    <th>🌫️ PM10</th>
-                </tr>
-            </thead>
-            <tbody id="tabela"></tbody>
-        </table>
+        <div class="predikcija-container">
+            <h1>Predikcija</h1>
+            <div class="card">
+                <div class="icon">🌡️</div>
+                <h2>Temperatura</h2>
+                <div class="value" id="predikcija-temperatura">--°C</div>
+            </div>
+            <div class="card">
+                <div class="icon">🌬️</div>
+                <h2>Kvalitet vazduha</h2>
+                <div class="value air" id="predikcija-kvalitet-vazduha">-----</div>
+            </div>
+        </div>
+        <div class="tabela-container">
+            <h1>Senzorski podaci</h1>
+            <table class="tabela" id="tabela">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>⏰ Vreme</th>
+                        <th>🌡️ Temperatura</th>
+                        <th>💧 Vlažnost vazduha</th>
+                        <th>🌫️ PM2.5</th>
+                        <th>🌫️ PM10</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela"></tbody>
+            </table>
+        </div>
     </div>
     <script src="static/main.js"></script>
 </body>

@@ -38,8 +38,6 @@ var messagePubHandler emqx.MessageHandler = func(client emqx.Client, msg emqx.Me
 		return
 	}
 
-	log.Printf("handler podatak: %v", podatak)
-
 	if podatak.Temperatura > TemperaturaGranica {
 		log.Print("slanje podatka na topic/IznadGranice/Temperatura")
 		token := client.Publish("topic/IznadGranice/Temperatura", 0, false, msg.Payload())

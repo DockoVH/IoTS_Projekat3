@@ -9,6 +9,7 @@ import (
 
 	"github.com/gorilla/websocket"
 	emqx "github.com/eclipse/paho.mqtt.golang"
+	"github.com/nats-io/nats.go"
 
 	"MqttClient/internal/mqtt"
 )
@@ -98,10 +99,28 @@ func handleWs(w http.ResponseWriter, r *http.Request) {
 
 	ch := make(chan []byte, 4)
 
-	go subscribe(ch, "topic/IznadGranice/Temperatura", '0')
-	go subscribe(ch, "topic/IznadGranice/VlaznostVazduha", '1')
-	go subscribe(ch, "topic/IznadGranice/Pm2_5", '2')
-	go subscribe(ch, "topic/IznadGranice/Pm10", '3')
+	klijentTemp := subscribe(ch, "topic/IznadGranice/Temperatura", '0')
+	klijentVlaznost := subscribe(ch, "topic/IznadGranice/VlaznostVazduha", '1')
+	klijentPm2_5 := subscribe(ch, "topic/IznadGranice/Pm2_5", '2')
+	klijentPm10 := subscribe(ch, "topic/IznadGranice/Pm10", '3')
+	if klijentTemp == nil || klijentVlaznost == nil || klijentPm2_5 == nil || klijentPm10 == nil {
+		return
+	}
+
+	natsKlijent, natsSub := natsSubscribe(ch, "nats/Predikcija", '4')
+	if natsKlijent == nil || natsSub == nil {
+		return
+	}
+
+	defer func() {
+		go unsubscribe(klijentTemp, "topic/IznadGranice/Temperatura")
+		go unsubscribe(klijentVlaznost, "topic/IznadGranice/VlaznostVazduha")
+		go unsubscribe(klijentPm2_5, "topic/IznadGranice/Pm2_5")
+		go unsubscribe(klijentPm10, "topic/IznadGranice/Pm10")
+
+		natsSub.Unsubscribe()
+		natsKlijent.Drain()
+	}()
 
 	for {
 		select {
@@ -124,8 +143,9 @@ func handleWs(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func subscribe(ch chan []byte ,topic string, oznaka byte) {
-	if klijent := mqtt.NoviKlijent(oznaka); klijent != nil {
+func subscribe(ch chan []byte, topic string, oznaka byte) emqx.Client {
+	klijent := mqtt.NoviKlijent(oznaka)
+	if klijent != nil {
 		token := klijent.Subscribe(topic, 1, func (client emqx.Client, msg emqx.Message) {
 			log.Printf("Primljen podatak: \n\tTopic: %v\n\tPayload: %v\n", msg.Topic(), string(msg.Payload()))
 			rezultat := append([]byte{ oznaka } , msg.Payload()...)
@@ -133,9 +153,40 @@ func subscribe(ch chan []byte ,topic string, oznaka byte) {
 			ch <- rezultat
 		})
 
-		<-token.Done()
-		if token.Error() != nil {
-			log.Printf("Subscribe(%s) greška: %v\n", topic, token.Error())
-		}
+		go func() {
+			<-token.Done()
+			if token.Error() != nil {
+				log.Printf("Subscribe(%s) greška: %v\n", topic, token.Error())
+			}
+		}()
 	}
+
+	return klijent
+}
+
+func unsubscribe(klijent emqx.Client, topic string) {
+	token := klijent.Unsubscribe(topic)
+
+	<-token.Done()
+	if token.Error() != nil {
+		log.Printf("Unsubscribe(\"%s\") greška: %v\n", topic, token.Error())
+	}
+	klijent.Disconnect(250)
+}
+
+func natsSubscribe(ch chan[]byte, topic string, oznaka byte) (*nats.Conn, *nats.Subscription) {
+	natsKlijent, err := nats.Connect("nats:4222")
+
+	sub, err := natsKlijent.Subscribe(topic, func(msg *nats.Msg) {
+		log.Printf("Primljen podatak: %v, sa topic-a: %v\n", string(msg.Data), msg.Subject)
+
+		rezultat := append([]byte{ oznaka }, msg.Data...)
+		ch <- rezultat
+	})
+	if err != nil {
+		log.Printf("nats.SubscribeSync(\"%s\") greška: %v\n", topic, err)
+		return nil, nil
+	}
+
+	return natsKlijent, sub
 }
