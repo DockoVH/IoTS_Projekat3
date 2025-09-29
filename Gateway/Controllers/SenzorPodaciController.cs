@@ -30,7 +30,11 @@ public class SenzorPodaciController : ControllerBase
 	[HttpGet("VratiSenzorPodatak/{id:int}")]
 	public async Task<IActionResult>VratiSenzorPodatak(int id)
 	{
-		Console.WriteLine($"Pribavljanje podatka sa ID: {id}");
+		if (id != 0)
+		{
+			Console.WriteLine($"Pribavljanje podatka sa ID: {id}");
+		}
+
 		try
 		{
 			Int32Value ID = new Int32Value { Value = id };
@@ -41,7 +45,11 @@ public class SenzorPodaciController : ControllerBase
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine($"Greška: {ex.Message}");
+			if (id != 0)
+			{
+				Console.WriteLine($"Greška: {ex.Message}");
+			}
+
 			if (ex.Message.Length > 6 && ex.Message.Substring(0, 6) == "Status")
 			{
 				return ParseStatus(ex.Message);
