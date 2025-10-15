@@ -1,0 +1,130 @@
+asyncapi: 2.6.0
+info:
+  title: Analytics - MQTT/NATS/HTTP komunikacija
+  version: 1.0.0
+  description: AsyncAPI specifikacija za Analytics servis.
+
+servers:
+  mqttBroker:
+    url: mqtt:1883
+    protocol: mqtt
+    description: MQTT broker za prijem senzorskih podataka.
+  natsBroker:
+    url: nats:4222
+    protocol: nats
+    description: NATS broker koji koristi Analytics za objavu predikcija.
+  mlaasService:
+    url: http://mlaas:9080
+    protocol: http
+    description: MLaaS servis koji vrši predikciju na osnovu istorijskih podataka.
+
+channels:
+  topic/NoviPodaci:
+    description: Topic sa koga Analytics prima nove senzorske podatke.
+    subscribe:
+      operationId: subscribeNoviPodaci
+      summary: Prijem novih senzorskih podataka od DataManager/EventManager servisa.
+      message:
+        $ref: '#/components/messages/SenzorPodatakMessage'
+      bindings:
+        mqtt:
+          qos: 1
+
+  nats/Predikcija:
+    description: Topic na koji Analytics publikuje rezultat predikcije.
+    publish:
+      operationId: publishPredikcija
+      summary: Publikovanje rezultata predikcije u NATS sistem.
+      message:
+        $ref: '#/components/messages/PredikcijaMessage'
+      bindings:
+        nats:
+          subject: nats/Predikcija
+
+components:
+  messages:
+    SenzorPodatakMessage:
+      name: SenzorPodatak
+      title: SenzorPodatak
+      summary: Struktura senzorskog podatka primljenog preko MQTT-a.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/SenzorPodatak'
+      examples:
+        - payload:
+            Temperatura: 27.8
+            Vlaznost: 58.4
+            Pm2_5: 3.5
+            Pm10: 8.2
+
+    PredikcijaMessage:
+      name: Predikcija
+      title: Predikcija
+      summary: Odgovor MLaaS servisa koji se publikuje na NATS.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/Predikcija'
+      examples:
+        - payload:
+            timestamp: "2025-10-15T14:35:00Z"
+            rezultat: "Kvalitet vazduha dobar"
+            vrednosti:
+              - 0.95
+              - 0.05
+
+  schemas:
+    SenzorPodatak:
+      type: object
+      required:
+        - Temperatura
+        - Vlaznost
+        - Pm2_5
+        - Pm10
+      properties:
+        Temperatura:
+          type: number
+          format: float
+          description: Temperatura u °C.
+          example: 27.8
+        Vlaznost:
+          type: number
+          format: float
+          description: Vlažnost vazduha u procentima.
+          example: 58.4
+        Pm2_5:
+          type: number
+          format: float
+          description: Koncentracija PM2.5 čestica.
+          example: 3.5
+        Pm10:
+          type: number
+          format: float
+          description: Koncentracija PM10 čestica.
+          example: 8.2
+
+    Predikcija:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Vreme dobijanja predikcije.
+          example: "2025-10-15T14:35:00Z"
+        rezultat:
+          type: string
+          description: Tekstualni opis rezultata predikcije.
+          example: "Kvalitet vazduha dobar"
+        vrednosti:
+          type: array
+          items:
+            type: number
+          description: Numeričke vrednosti koje vraća ML model.
+          example: [0.95, 0.05]
+
+tags:
+  - name: mqtt
+    description: MQTT komunikacija (ulazni podaci)
+  - name: nats
+    description: NATS komunikacija (izlazne predikcije)
+  - name: http
+    description: HTTP zahtevi prema MLaaS servisu
