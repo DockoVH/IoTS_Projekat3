@@ -49,7 +49,7 @@ func Healthcheck() error {
 }
 
 func Pisi() {
-	for i := 1; i <= 50; i++ {
+	for i := 18; i <= 50; i++ {
 		putanja := fmt.Sprintf("/api/cmd/api/datasetovi/%v.csv", i)
 		log.Print(putanja)
 

@@ -11,6 +11,8 @@ const vlaznostGranica = 60.0 //80.0
 const pm2_5Granica = 5.0 //55.0
 const pm10Granica = 10.0 //253.0
 
+const KVALITET_VAZDUHA_KLASA = ["DOBRO", "UMERENO", "LOŠE", "VEOMA LOŠE"]
+
 socket.onopen = (e) => {
     console.log('povezan')
 } 
@@ -23,10 +25,14 @@ socket.onmessage = (e) => {
         str += String.fromCharCode(parseInt(p))
     })
     const obj = JSON.parse(str.slice(1))
+    console.log(obj)
+    console.log(KVALITET_VAZDUHA_KLASA)
+    console.log(KVALITET_VAZDUHA_KLASA[0])
+    console.log(KVALITET_VAZDUHA_KLASA[2])
 
     if (str[0] == '4') {
         predTemperatura.innerText = `${obj.predvidjena_temperatura.toFixed(2)} °C`
-        predKvalitetVazduha.innerText = `${obj.kvalitet_vazduha.klasa}`
+        predKvalitetVazduha.innerText = `${KVALITET_VAZDUHA_KLASA[obj.kvalitet_vazduha.klasa_idx]}`
 
         return
     }

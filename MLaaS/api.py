@@ -32,7 +32,6 @@ if model is None or scaler is None:
 	exit(1)
 
 app = FastAPI(title = 'Senzor podaci predikcija API')
-KLASE_KVALITETA_VAZDUHA = ['DOBRO', 'UMERENO', 'LOŠE', 'VEOMA LOŠE']
 
 class SenzorPodaci(BaseModel):
 	Podaci: list
@@ -52,12 +51,11 @@ async def predict(ulaz: SenzorPodaci):
 		pred_temp, pred_class_probs = model.predict(X_new)
 		pred_temp = float(pred_temp[0][0])
 		pred_class_idx = int(np.argmax(pred_class_probs, axis = 1)[0])
-		pred_kvalitet = KLASE_KVALITETA_VAZDUHA[pred_class_idx]
 
 		return {
 			'predvidjena_temperatura': pred_temp,
 			'kvalitet_vazduha': {
-				'klasa': pred_kvalitet,
+				'klasa_idx': pred_class_idx,
 				'verovatnoce': pred_class_probs[0].tolist()
 			}
 		}
